@@ -35,9 +35,11 @@ if (popupCloseIcon.length > 0) {
 
     }
 }
+const closeX = document.querySelector('.close-popup')
+const vids = document.querySelectorAll('#video-block') //получилл список всех видео, прошёлся циклом. зафиксировал mouover-ом нужный iframe и после закрывания попапа, запаузил нужное видео
 
 function popupOpen(curentPopup) {
-    let vids = document.querySelectorAll('#video-block') //получилл список всех видео, прошёлся циклом. зафиксировал mouover-ом нужный iframe и после закрывания попапа, запаузил нужное видео
+    
     
     if (Mobile){
         
@@ -61,6 +63,10 @@ function popupOpen(curentPopup) {
         curentPopup.classList.add('open')
         curentPopup.addEventListener('click', function (e) {
             if (!e.target.closest('.popup__content')) {
+                popupClose(e.target.closest('.popup'))
+                currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
+            }
+            if (e.target == closeX){
                 popupClose(e.target.closest('.popup'))
                 currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
             }
