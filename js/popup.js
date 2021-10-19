@@ -3,7 +3,14 @@ const Body = document.querySelector('body')
 const lockPadding = document.querySelectorAll('.lock-padding')
 let unlock = true
 const timeout = 800
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
 
+    Mobile = true
+
+} 
+else {
+    Mobile = false
+}
 if (popupLinks.length > 0) {
     for (let index = 0; index < popupLinks.length; index++) {
         const popupLink = popupLinks[index]
@@ -31,11 +38,18 @@ if (popupCloseIcon.length > 0) {
 
 function popupOpen(curentPopup) {
     let vids = document.querySelectorAll('#video-block') //получилл список всех видео, прошёлся циклом. зафиксировал mouover-ом нужный iframe и после закрывания попапа, запаузил нужное видео
-    $.each(vids, function (index, value) {
-        $(value).mouseover(function (e) {
-            currentiframe = e.target
+    
+    if (Mobile){
+        
+    }
+    else{
+        $.each(vids, function (index, value) {
+            $(value).mouseover(function (e) {
+                currentiframe = e.target
+            })
         })
-    })
+    }
+
     if (curentPopup && unlock) {
         const popupActive = document.querySelector('.popun.open')
         if (popupActive) {
@@ -49,10 +63,7 @@ function popupOpen(curentPopup) {
             if (!e.target.closest('.popup__content')) {
                 popupClose(e.target.closest('.popup'))
                 currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
-
             }
-
-
         })
     }
 
