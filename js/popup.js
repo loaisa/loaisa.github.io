@@ -7,7 +7,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phon
 
     Mobile = true
 
-} 
+}
 else {
     Mobile = false
 }
@@ -35,22 +35,12 @@ if (popupCloseIcon.length > 0) {
 
     }
 }
-const closeX = document.querySelector('.close-popup')
+
+const closeX = document.querySelector('.popup__close' )
 const vids = document.querySelectorAll('#video-block') //получилл список всех видео, прошёлся циклом. зафиксировал mouover-ом нужный iframe и после закрывания попапа, запаузил нужное видео
 
+
 function popupOpen(curentPopup) {
-    
-    
-    if (Mobile){
-        
-    }
-    else{
-        $.each(vids, function (index, value) {
-            $(value).mouseover(function (e) {
-                currentiframe = e.target
-            })
-        })
-    }
 
     if (curentPopup && unlock) {
         const popupActive = document.querySelector('.popun.open')
@@ -61,16 +51,36 @@ function popupOpen(curentPopup) {
             BodyLock();
         }
         curentPopup.classList.add('open')
-        curentPopup.addEventListener('click', function (e) {
-            if (!e.target.closest('.popup__content')) {
-                popupClose(e.target.closest('.popup'))
-                currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
-            }
-            if (e.target == closeX){
-                popupClose(e.target.closest('.popup'))
-                currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
-            }
-        })
+
+        if (Mobile) {
+            closeX.classList.add('hide')
+            curentPopup.addEventListener('touchstart', function (e) {
+                currentiframe = e.target.querySelector('iframe')
+                if (!e.target.closest('.popup__content')) {
+                    popupClose(e.target.closest('.popup'))
+                    currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
+                }
+            })
+        }
+        else {
+            $.each(vids, function (index, value) {
+                $(value).mouseover(function (e) {
+                    currentiframe = e.target
+                })
+            })
+            curentPopup.addEventListener('click', function (e) {
+                console.log(currentiframe)
+                if (!e.target.closest('.popup__content')) {
+                    popupClose(e.target.closest('.popup'))
+                    currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
+                }
+                if (e.target == closeX) {
+                    popupClose(e.target.closest('.popup'))
+                    currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
+                }
+            })
+        }
+
     }
 
     document.querySelector('.slick-arrow').classList.add('hide')
