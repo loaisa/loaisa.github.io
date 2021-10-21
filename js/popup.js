@@ -69,7 +69,6 @@ function popupOpen(curentPopup) {
                 })
             })
             curentPopup.addEventListener('click', function (e) {
-                console.log(currentiframe)
                 if (!e.target.closest('.popup__content')) {
                     popupClose(e.target.closest('.popup'))
                     currentiframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
