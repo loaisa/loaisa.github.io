@@ -599,7 +599,7 @@ h3 {
 }
 @media screen and (max-width: 660px) {
     .container_item.img{
-        height: 240px;
+        height: 100px;
     }
     .slider{
         width: 100%;
