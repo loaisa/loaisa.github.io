@@ -127,7 +127,7 @@ nav a:hover {
     height: 1080px;
 }
 
-.contact {
+.wall {
     position: relative;
     height: 100%;
     width: 100%;
@@ -135,7 +135,7 @@ nav a:hover {
 
 /**/
 
-.contact::after {
+.wall::after {
     position: absolute;
     content: "";
     top: 0;
